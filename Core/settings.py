@@ -28,8 +28,8 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 
 ALLOWED_HOSTS = [
     'jessster-476efeac7498.herokuapp.com',
@@ -56,6 +56,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'home',
+    'drf_yasg', # To generate swagger & redo docs
+    'rest_framework',  # For Django REST Framework API URLs
+    'corsheaders', # To allow React app to communicate with Django backend
 ]
 
 
@@ -108,6 +111,7 @@ AUTHENTICATION_BACKENDS = (
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # To allow React app to communicate with Django backend
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -116,6 +120,9 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware', # to serve css of admin panel in production
     'allauth.account.middleware.AccountMiddleware',
 ]
+
+# CORS configuration
+CORS_ALLOW_ALL_ORIGINS = True  # True For development
 
 ROOT_URLCONF = 'Core.urls'
 
