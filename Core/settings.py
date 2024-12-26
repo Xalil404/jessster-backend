@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'home',
     'contactAPI',
+    'profileAPI',
     'drf_yasg', # To generate swagger & redo docs
     'rest_framework',  # For Django REST Framework API URLs
     'corsheaders', # To allow React app to communicate with Django backend
