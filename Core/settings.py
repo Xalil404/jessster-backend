@@ -55,9 +55,11 @@ INSTALLED_APPS = [
     'cloudinary',
     'crispy_forms',
     'crispy_bootstrap4',
+    'Core', # To customize admin panel & show user ID
     'home',
     'contactAPI',
     'profileAPI',
+    'tasksAPI',
     'drf_yasg', # To generate swagger & redo docs
     'rest_framework',  # For Django REST Framework API URLs
     'corsheaders', # To allow React app to communicate with Django backend
