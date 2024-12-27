@@ -158,7 +158,7 @@ CORS_ALLOW_CREDENTIALS = True
 # For production, restrict this to specific domains
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React local development server
-    'https://jessster-frontend.vercel.app/',  # Your deployed React app
+    'https://jessster-frontend.vercel.app',  # Your deployed React app
     "https://appleid.apple.com",
 ]
 
@@ -169,14 +169,14 @@ CORS_ALLOWED_ORIGINS = [
 # can interact with resources on another origin. For security, Django includes 
 # CSRF protection by default, which checks whether the request comes from a trusted domain
 CSRF_TRUSTED_ORIGINS = [
-    "https://jessster-frontend.vercel.app/",  # Replace with your frontend's actual domain
-    "https://jessster-476efeac7498.herokuapp.com/",  # Replace with your backend's actual domain (if necessary)
+    "https://jessster-frontend.vercel.app",  # Replace with your frontend's actual domain
+    "https://jessster-476efeac7498.herokuapp.com",  # Replace with your backend's actual domain (if necessary)
 ]
 
 # CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    "https://jessster-frontend.vercel.app/",
+    "https://jessster-frontend.vercel.app",
     "https://appleid.apple.com",
 ]
 
