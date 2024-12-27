@@ -38,6 +38,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('summernote/', include('django_summernote.urls')),  # Summernote editor
     path("accounts/", include("allauth.urls")),
     path('auth/', include('dj_rest_auth.urls')),  # Login/logout/password reset
     path('auth/registration/', include('dj_rest_auth.registration.urls')),  # Registration
@@ -45,6 +46,7 @@ urlpatterns = [
     path('api/', include('contactAPI.urls')),
     path('api/', include('profileAPI.urls')),
     path('api/', include('tasksAPI.urls')),
+    path('api/', include('blogAPI.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
