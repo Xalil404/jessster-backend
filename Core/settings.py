@@ -140,8 +140,49 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+
+# These settings are related to Cross-Origin Resource Sharing (CORS) and 
+# secure cookie handling, and they play a crucial role when your frontend 
+# and backend are hosted on different domains (which is the case for your setup)
+
+# This setting ensures that session cookies are only sent over HTTPS connections
+SESSION_COOKIE_SECURE = True
+
 # CORS configuration
 CORS_ALLOW_ALL_ORIGINS = True  # True For development
+
+# This setting allows the browser to send cookies and credentials (like authentication tokens)
+CORS_ALLOW_CREDENTIALS = True
+
+
+# For production, restrict this to specific domains
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React local development server
+    'https://jessster-frontend.vercel.app/',  # Your deployed React app
+    "https://appleid.apple.com",
+]
+
+
+# When your frontend and backend are hosted on different domains (e.g., 
+# frontend on Vercel and backend on Heroku or localhost), browsers enforce 
+# the Same-Origin Policy. This policy restricts how scripts from one origin 
+# can interact with resources on another origin. For security, Django includes 
+# CSRF protection by default, which checks whether the request comes from a trusted domain
+CSRF_TRUSTED_ORIGINS = [
+    "https://jessster-frontend.vercel.app/",  # Replace with your frontend's actual domain
+    "https://jessster-476efeac7498.herokuapp.com/",  # Replace with your backend's actual domain (if necessary)
+]
+
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://jessster-frontend.vercel.app/",
+    "https://appleid.apple.com",
+]
+
+# This setting ensures that the CSRF cookie is only sent over HTTPS connections, similar to SESSION_COOKIE_SECURE
+CSRF_COOKIE_SECURE = True
+
 
 ROOT_URLCONF = 'Core.urls'
 
