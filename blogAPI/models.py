@@ -4,9 +4,18 @@ from cloudinary.models import CloudinaryField
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    language = models.CharField(
+        max_length=10,
+        choices=[
+            ('en', 'English'),
+            ('ru', 'Russian'),
+            ('ar', 'Arabic')
+        ]
+    )
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.language})"
+
 
 class Post(models.Model):
     STATUS = ((0, "Draft"), (1, "Published"))

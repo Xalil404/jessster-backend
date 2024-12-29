@@ -19,6 +19,9 @@ class PostDetailView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]  # Allow anyone to access this view
 
 class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [AllowAny]  # Allow anyone to access this view
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        language = self.request.query_params.get('language', 'en')  # Default to 'en' if no language is provided
+        return Category.objects.filter(language=language)
