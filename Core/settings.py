@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'profileAPI',
     'tasksAPI',
     'blogAPI',
+    'videoAPI',
     'django_summernote', # To add summernote editor to blog
     'drf_yasg', # To generate swagger & redo docs
     'rest_framework',  # For Django REST Framework API URLs
