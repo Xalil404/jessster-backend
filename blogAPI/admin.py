@@ -14,4 +14,6 @@ class PostAdmin(SummernoteModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'language',)
+    list_display = ('id', 'name', 'language', 'slug')  # Added slug for visibility
+    search_fields = ('name', 'slug')  # Allow searching by name and slug
+    prepopulated_fields = {'slug': ('name',)}  # Auto-generate slug based on name

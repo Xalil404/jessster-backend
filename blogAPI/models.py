@@ -1,20 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.utils.text import slugify
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     language = models.CharField(
         max_length=10,
-        choices=[
-            ('en', 'English'),
-            ('ru', 'Russian'),
-            ('ar', 'Arabic')
-        ]
+        choices=[('en', 'English'), ('ru', 'Russian'), ('ar', 'Arabic')]
     )
+    slug = models.SlugField(max_length=60, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # Automatically generate a slug from the name and language
+            self.slug = slugify(f"{self.name}-{self.language}")
+        
+        # Ensure the slug is unique by checking against other categories with the same language
+        count = Category.objects.filter(slug=self.slug, language=self.language).count()
+        if count > 0:
+            self.slug = f"{self.slug}-{count+1}"
+        
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name} ({self.language})"
+
 
 
 class Post(models.Model):
