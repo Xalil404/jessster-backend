@@ -22,10 +22,7 @@ class PostDetailView(generics.RetrieveAPIView):
     lookup_field = 'slug'
     permission_classes = [AllowAny]  # Allow anyone to access this view
 
-    def get_object(self):
-        post = super().get_object()
-        post.increment_views()  # Increment views using the model's method
-        return post
+
 
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
