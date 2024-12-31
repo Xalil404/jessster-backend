@@ -40,11 +40,12 @@ def increment_views(request, slug):
     """
     try:
         post = Post.objects.get(slug=slug)
-        post.views += 1
+        post.number_of_views += 1  # Update the 'number_of_views' field instead of 'views'
         post.save()
-        return Response({'message': 'Views incremented successfully', 'views': post.views}, status=status.HTTP_200_OK)
+        return Response({'message': 'Views incremented successfully', 'number_of_views': post.number_of_views}, status=status.HTTP_200_OK)
     except Post.DoesNotExist:
         return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['POST'])
 def increment_likes(request, slug):
