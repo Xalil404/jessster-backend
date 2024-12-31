@@ -10,6 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     author = serializers.StringRelatedField()
     likes_count = serializers.SerializerMethodField()
+    number_of_views = serializers.IntegerField(source='number_of_views', read_only=True)
 
     class Meta:
         model = Post
