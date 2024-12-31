@@ -22,6 +22,11 @@ class PostDetailView(generics.RetrieveAPIView):
     lookup_field = 'slug'
     permission_classes = [AllowAny]  # Allow anyone to access this view
 
+    def get_object(self):
+        post = super().get_object()
+        post.increment_views()  # Increment views using the model's method
+        return post
+
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
@@ -40,11 +45,12 @@ def increment_views(request, slug):
     """
     try:
         post = Post.objects.get(slug=slug)
-        post.number_of_views += 1  # Update the 'number_of_views' field instead of 'views'
-        post.save()
+        post.increment_views()  # Use the model's method to increment views
         return Response({'message': 'Views incremented successfully', 'number_of_views': post.number_of_views}, status=status.HTTP_200_OK)
     except Post.DoesNotExist:
         return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
 
 
 @api_view(['POST'])

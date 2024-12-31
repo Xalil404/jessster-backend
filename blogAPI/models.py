@@ -51,3 +51,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def increment_views(self):
+        self.number_of_views += 1
+        self.save() 
