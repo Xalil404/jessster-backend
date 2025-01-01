@@ -28,5 +28,11 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'user', 'content', 'created_on', 'is_approved')
-        read_only_fields = ('created_on', 'user')  # Prevent users from changing the author and created_on
+        fields = ('id', 'post', 'user', 'content', 'created_on', 'updated_on', 'parent_comment')
+        read_only_fields = ('created_on', 'updated_on', 'user', 'post')
+
+    def validate_content(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Content cannot be empty.")
+        return value
+
