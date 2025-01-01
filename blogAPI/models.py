@@ -47,6 +47,7 @@ class Post(models.Model):
     language = models.CharField(max_length=2, choices=LANGUAGES, default="en")
     number_of_views = models.PositiveIntegerField(default=0)
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
+    comment_count = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-created_on']
@@ -57,6 +58,11 @@ class Post(models.Model):
     def increment_views(self):
         self.number_of_views += 1
         self.save() 
+
+    def update_comment_count(self):
+        """Manually update the comment count."""
+        self.comment_count = self.comments.count()
+        self.save()
 
 
 

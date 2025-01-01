@@ -11,17 +11,21 @@ class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     likes_count = serializers.SerializerMethodField()
     number_of_views = serializers.IntegerField(read_only=True)
+    comment_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Post
         fields = [
             'id', 'title', 'slug', 'author', 'featured_image', 'excerpt', 
             'content', 'status', 'category', 'language', 'number_of_views',
-            'likes_count', 'created_on', 'updated_on'
+            'likes_count', 'comment_count', 'created_on', 'updated_on'
         ]
 
     def get_likes_count(self, obj):
         return obj.likes.count()
+
+    def get_comment_count(self, obj):
+        return obj.comments.count()
 
 
 
