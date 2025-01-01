@@ -26,9 +26,12 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    profile_image = serializers.ImageField(source='user.profile.profile_picture', read_only=True)
+
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'user', 'content', 'created_on', 'updated_on', 'parent_comment')
+        fields = ('id', 'post', 'user', 'content', 'created_on', 'updated_on', 'parent_comment', 'username', 'profile_image')
         read_only_fields = ('created_on', 'updated_on', 'user', 'post')
 
     def validate_content(self, value):
