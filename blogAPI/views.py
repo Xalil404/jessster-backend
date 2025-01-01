@@ -67,7 +67,7 @@ class CommentListView(generics.ListCreateAPIView):
     def get_queryset(self):
         post_slug = self.kwargs['slug']  # Retrieve the slug from URL parameters
         post = get_object_or_404(Post, slug=post_slug)
-        return Comment.objects.filter(post=post, is_approved=True)
+        return Comment.objects.filter(post=post)
 
     def perform_create(self, serializer):
         post_slug = self.kwargs['slug']
