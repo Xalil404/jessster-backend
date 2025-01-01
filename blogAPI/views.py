@@ -62,7 +62,7 @@ class ToggleLikeView(APIView):
 # Add a view for Comment Creation
 class CommentListView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         post_slug = self.kwargs['slug']  # Retrieve the slug from URL parameters
