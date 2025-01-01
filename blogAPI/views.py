@@ -10,6 +10,9 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework import status
 
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+
 
 class PostListView(generics.ListAPIView):
     queryset = Post.objects.filter(status=1)  # Adjust the filter based on your requirements
@@ -42,17 +45,21 @@ class CategoryListView(generics.ListAPIView):
 
 
 
+class ToggleLikeView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensure the user is logged in
 
-@api_view(['POST'])
-def increment_likes(request, slug):
-    """
-    Increment likes count for a specific post.
-    """
-    try:
-        post = Post.objects.get(slug=slug)
-        post.likes += 1
-        post.save()
-        return Response({'message': 'Likes incremented successfully', 'likes': post.likes}, status=status.HTTP_200_OK)
-    except Post.DoesNotExist:
-        return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+    def post(self, request, slug):
+        post = get_object_or_404(Post, slug=slug, status=1)
+        user = request.user
 
+        if user in post.likes.all():
+            post.likes.remove(user)  # Unlike the post
+            liked = False
+        else:
+            post.likes.add(user)  # Like the post
+            liked = True
+
+        return Response({
+            'liked': liked,
+            'likes_count': post.likes.count(),
+        })
