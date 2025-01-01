@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
-from .models import Post, Category
-from .serializers import PostSerializer, CategorySerializer
+from .models import Post, Category, Comment
+from .serializers import PostSerializer, CategorySerializer, CommentSerializer
 
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
@@ -39,12 +39,6 @@ class CategoryListView(generics.ListAPIView):
         return Category.objects.filter(language=language)
 
 
-
-
-
-
-
-
 class ToggleLikeView(APIView):
     permission_classes = [IsAuthenticated]  # Ensure the user is logged in
 
@@ -63,3 +57,30 @@ class ToggleLikeView(APIView):
             'liked': liked,
             'likes_count': post.likes.count(),
         })
+
+
+# Add a view for Comment Creation
+class CommentListView(generics.ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        post_slug = self.kwargs['slug']  # Retrieve the slug from URL parameters
+        post = get_object_or_404(Post, slug=post_slug)
+        return Comment.objects.filter(post=post, is_approved=True)
+
+    def perform_create(self, serializer):
+        post_slug = self.kwargs['slug']
+        post = get_object_or_404(Post, slug=post_slug)
+        serializer.save(author=self.request.user, post=post)
+
+
+# Add a view for retrieving a single comment (optional)
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
+
+    def get_queryset(self):
+        return Comment.objects.filter(post__slug=self.kwargs['slug'])

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.utils.text import slugify
+from django.utils import timezone
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -55,3 +57,20 @@ class Post(models.Model):
     def increment_views(self):
         self.number_of_views += 1
         self.save() 
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_on = models.DateTimeField(default=timezone.now)
+    updated_on = models.DateTimeField(auto_now=True)
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on {self.post.title}"
