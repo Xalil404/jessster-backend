@@ -72,7 +72,7 @@ class CommentListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         post_slug = self.kwargs['slug']
         post = get_object_or_404(Post, slug=post_slug)
-        serializer.save(author=self.request.user, post=post)
+        serializer.save(user=self.request.user, post=post)
 
 
 # Add a view for retrieving a single comment (optional)

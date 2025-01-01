@@ -28,5 +28,5 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'author', 'content', 'created_on', 'is_approved')
-        read_only_fields = ('created_on', 'author')  # Prevent users from changing the author and created_on
+        fields = ('id', 'post', 'user', 'content', 'created_on', 'is_approved')
+        read_only_fields = ('created_on', 'user')  # Prevent users from changing the author and created_on
