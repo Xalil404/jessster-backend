@@ -7,7 +7,7 @@ from .serializers import PostSerializer, CategorySerializer, CommentSerializer
 
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 
 from rest_framework.permissions import IsAuthenticated
@@ -15,6 +15,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 
 from django.db.models import Count, F
+
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 class PostListView(generics.ListAPIView):
     serializer_class = PostSerializer
@@ -41,12 +44,6 @@ class PostListView(generics.ListAPIView):
         return queryset
 
 
-'''
-class PostListView(generics.ListAPIView):
-    queryset = Post.objects.filter(status=1)  # Adjust the filter based on your requirements
-    serializer_class = PostSerializer
-    permission_classes = [AllowAny]  # Allow anyone to access this view
-'''
 
 class PostDetailView(generics.RetrieveAPIView):
     queryset = Post.objects.filter(status=1)
@@ -113,3 +110,19 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Comment.objects.filter(post__slug=self.kwargs['slug'])
+
+
+
+# Search posts 
+@api_view(['GET'])
+@permission_classes([AllowAny])  # Allow anonymous users to access this view
+def search_posts(request):
+    query = request.GET.get('q', '')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+        serializer = PostSerializer(posts, many=True)
+        return Response({"results": serializer.data})
+    else:
+        return Response({"results": []})
