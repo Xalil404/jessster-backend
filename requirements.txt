@@ -17,6 +17,7 @@ django-crispy-forms==2.3
 django-summernote==0.8.20.0
 djangorestframework==3.15.2
 drf-yasg==1.21.8
+ecdsa==0.19.0
 google-auth==2.37.0
 gunicorn==23.0.0
 idna==3.10
@@ -28,6 +29,7 @@ pyasn1==0.6.1
 pyasn1_modules==0.4.1
 pycparser==2.22
 PyJWT==2.10.1
+python-jose==3.3.0
 pytz==2024.2
 PyYAML==6.0.2
 requests==2.32.3

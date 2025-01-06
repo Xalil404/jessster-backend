@@ -3,7 +3,7 @@ import json
 import logging
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-# from jose import jwt, jwk
+from jose import jwt, jwk
 from django.conf import settings
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
