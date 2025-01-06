@@ -56,6 +56,7 @@ class PostDetailView(generics.RetrieveAPIView):
         post.increment_views()  # Increment views using the model's method
         return post
 
+
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     permission_classes = [AllowAny]
@@ -126,3 +127,14 @@ def search_posts(request):
         return Response({"results": serializer.data})
     else:
         return Response({"results": []})
+
+
+# Retrieve the list of articles a user liked
+class LikedArticlesView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        liked_posts = Post.objects.filter(likes=user, status=1)  # Filter only published posts
+        serializer = PostSerializer(liked_posts, many=True)
+        return Response(serializer.data)
