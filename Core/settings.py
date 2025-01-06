@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'tasksAPI',
     'blogAPI',
     'videoAPI',
+    'GoogleAuth',
     'django_summernote', # To add summernote editor to blog
     'drf_yasg', # To generate swagger & redo docs
     'rest_framework',  # For Django REST Framework API URLs
@@ -90,6 +92,24 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
+
+# Tokens are stored in the database and can be accessed again later for API calls or 
+# refreshes without needing to authenticate the user again
+SOCIALACCOUNT_STORE_TOKENS = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
