@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'blogAPI',
     'videoAPI',
     'GoogleAuth',
+    'AppleAuth',
     'django_summernote', # To add summernote editor to blog
     'drf_yasg', # To generate swagger & redo docs
     'rest_framework',  # For Django REST Framework API URLs
@@ -107,10 +108,19 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
+    },
+    'apple': {
+        'CLIENT_ID': os.environ.get('APPLE_CLIENT_ID', 'com.jessster.times.web'),  # Default to your client ID
+        'SECRET_KEY': os.environ.get('APPLE_AUTH_KEY_PATH', str(BASE_DIR / 'private_keys' / 'AuthKey_A79XNK7987.p8')),  # Make sure the path is correct
+        'TEAM_ID': os.environ.get('APPLE_TEAM_ID', 'TGGQFAW4Y5'),  # Default to your Team ID
+        'KEY_ID': os.environ.get('APPLE_KEY_ID', 'A79XNK7987'),  # Default to your Key ID
     }
 }
 
 
+# Web Apple Authentication Credentials
+APPLE_CLIENT_ID = 'com.jessster.times.web'
+APPLE_REDIRECT_URI = os.environ.get('APPLE_REDIRECT_URI', 'https://jessster-frontend.vercel.app/auth/callback')  # Replace with your actual redirect URI
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
