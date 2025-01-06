@@ -92,7 +92,7 @@ def apple_auth_web(request):
         # Generate an auth token for the user
         token, _ = Token.objects.get_or_create(user=user)
 
-        return JsonResponse({'token': token.key, 'redirect': '/dashboard/'})
+        return JsonResponse({'token': token.key, 'redirect': '/dashboard'})
 
     except jwt.ExpiredSignatureError:
         return JsonResponse({'error': 'Token has expired'}, status=401)
