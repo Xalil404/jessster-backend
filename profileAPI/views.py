@@ -16,21 +16,21 @@ class ProfileDetailUpdateView(generics.RetrieveUpdateDestroyAPIView):
         return self.request.user.profile
 
     def update(self, request, *args, **kwargs):
-        # Enable partial updates (PATCH)
+    # Enable partial updates (PATCH)
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
 
-        # Make the request data mutable
+    # Make the request data mutable
         data = request.data.copy()
 
-        # Check if profile_picture is in the request data, if not, retain the current profile_picture
-        if 'profile_picture' not in data:
-            data['profile_picture'] = instance.profile_picture
+    # Handle case for removing profile picture (set to null)
+        if 'profile_picture' in data and data['profile_picture'] == 'null':
+            data['profile_picture'] = None  # Set to None to remove the profile picture
 
-        # Serialize the data
+    # Serialize the data
         serializer = self.get_serializer(instance, data=data, partial=partial)
 
-        # Validate and update
+    # Validate and update
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
