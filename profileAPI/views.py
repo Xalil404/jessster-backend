@@ -15,3 +15,12 @@ class ProfileDetailUpdateView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         # This ensures the profile returned is the one related to the logged-in user
         return self.request.user.profile
+
+    def update(self, request, *args, **kwargs):
+        # Enable partial updates (PATCH)
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
