@@ -9,7 +9,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['id', 'bio', 'profile_picture', 'username']  # Add more fields if needed
 
-        def update(self, instance, validated_data):
+    def update(self, instance, validated_data):
         # Only update fields present in validated_data
         for attr, value in validated_data.items():
             setattr(instance, attr, value)

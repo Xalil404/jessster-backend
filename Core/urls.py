@@ -44,7 +44,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('adminka/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),  # Summernote editor
     path("accounts/", include("allauth.urls")),
     path('auth/', include('dj_rest_auth.urls')),  # Login/logout/password reset
