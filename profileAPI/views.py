@@ -20,12 +20,15 @@ class ProfileDetailUpdateView(generics.RetrieveUpdateDestroyAPIView):
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
 
+        # Make the request data mutable
+        data = request.data.copy()
+
         # Check if profile_picture is in the request data, if not, retain the current profile_picture
-        if 'profile_picture' not in request.data:
-            request.data['profile_picture'] = instance.profile_picture
+        if 'profile_picture' not in data:
+            data['profile_picture'] = instance.profile_picture
 
         # Serialize the data
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(instance, data=data, partial=partial)
 
         # Validate and update
         serializer.is_valid(raise_exception=True)
