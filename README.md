@@ -2,11 +2,12 @@
 
 Jessster is a satirical news publishing platform.
 
-This is the back-end part of the project. The front-end part can be found [here]() and mobile app part can be found [here]().
+This is the back-end part of the project. The front-end part can be found [here](https://github.com/Xalil404/jessster-frontend) and mobile app part can be found [here](https://github.com/Xalil404/jessster-frontend).
 
-Link to live site [here]().
+Link to live site [here](https://jessster-frontend.vercel.app/).
+
 <p align="center">
-<img src="" width="auto" height="auto" alt="image of the Jessster website"></p>
+<img src="https://res.cloudinary.com/dnbbm9vzi/image/upload/v1736339956/Screenshot_2025-01-08_at_12.38.49_PM_kpqwib.png" width="auto" height="auto" alt="image of the Jessster website"></p>
 
 ## Platform features
 * Backend using Django and python
