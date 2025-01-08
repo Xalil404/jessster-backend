@@ -10,7 +10,7 @@ class VideoListView(generics.ListAPIView):
 
     def get_queryset(self):
         lang = self.request.query_params.get('lang', 'en')  # Default to 'en' if 'lang' is not provided
-        return Video.objects.filter(language=lang)
+        return Video.objects.filter(language=lang, status=1)
 
 
 # Retrieve a single video (view-only)
