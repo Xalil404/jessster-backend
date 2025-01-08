@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'tasksAPI',
     'blogAPI',
     'videoAPI',
+    'subscribersAPI',
     'GoogleAuth',
     'AppleAuth',
     'django_summernote', # To add summernote editor to blog
