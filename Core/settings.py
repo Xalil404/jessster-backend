@@ -33,6 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'jessster-476efeac7498.herokuapp.com',
+    'jessster.com',
     '127.0.0.1', 
     'localhost'
 ]
@@ -120,7 +121,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Web Apple Authentication Credentials
 APPLE_CLIENT_ID = 'com.jessster.times.web'
-APPLE_REDIRECT_URI = os.environ.get('APPLE_REDIRECT_URI', 'https://jessster-frontend.vercel.app/auth/callback')  # Replace with your actual redirect URI
+APPLE_REDIRECT_URI = os.environ.get('APPLE_REDIRECT_URI', 'https://jessster-frontend.vercel.app/auth/callback,https://www.jessster.com/auth/callback')  # Replace with your actual redirect URI
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -191,6 +192,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React local development server
     'https://jessster-frontend.vercel.app',  # Your deployed React app
     "https://appleid.apple.com",
+    'https://www.jessster.com',
 ]
 
 
@@ -202,6 +204,7 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://jessster-frontend.vercel.app",  # Replace with your frontend's actual domain
     "https://jessster-476efeac7498.herokuapp.com",  # Replace with your backend's actual domain (if necessary)
+    'https://www.jessster.com',
 ]
 
 # CSRF trusted origins
@@ -209,6 +212,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "https://jessster-frontend.vercel.app",
     "https://appleid.apple.com",
+    'https://www.jessster.com',
 ]
 
 # This setting ensures that the CSRF cookie is only sent over HTTPS connections, similar to SESSION_COOKIE_SECURE
