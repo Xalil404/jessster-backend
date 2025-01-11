@@ -19,6 +19,43 @@ from django.db.models import Count, F
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 
+
+class PostListView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        # Default queryset filters (all published posts)
+        queryset = Post.objects.filter(status=1)
+
+        # Check for sorting criteria passed as query params
+        sort_by = self.request.query_params.get('sort_by', 'created_on')  # Default to created_on
+        order = self.request.query_params.get('order', 'desc')  # Default to descending order
+
+        # Filter by category if the 'category' query parameter is provided
+        category_slug = self.request.query_params.get('category', None)
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+
+        # Filter by language if the 'language' query parameter is provided
+        language = self.request.query_params.get('language', None)
+        if language:
+            queryset = queryset.filter(language=language)
+
+        # Handle sorting by views, likes, comments, or created date
+        if sort_by == 'views':
+            queryset = queryset.order_by(F('number_of_views').desc() if order == 'desc' else F('number_of_views').asc())
+        elif sort_by == 'likes':
+            queryset = queryset.annotate(likes_count=Count('likes')).order_by(F('likes_count').desc() if order == 'desc' else F('likes_count').asc())
+        elif sort_by == 'comments':
+            queryset = queryset.annotate(num_comments=Count('comments')).order_by(F('num_comments').desc() if order == 'desc' else F('num_comments').asc())
+        else:
+            # Default to ordering by creation date
+            queryset = queryset.order_by(F('created_on').desc() if order == 'desc' else F('created_on').asc())
+
+        return queryset
+
+'''
 class PostListView(generics.ListAPIView):
     serializer_class = PostSerializer
     permission_classes = [AllowAny]
@@ -30,7 +67,7 @@ class PostListView(generics.ListAPIView):
         # Check for sorting criteria passed as query params
         sort_by = self.request.query_params.get('sort_by', 'created_on')  # Default to created_on
         order = self.request.query_params.get('order', 'desc')  # Default to descending order
-        '''
+        
         # Filter by category if the 'category' query parameter is provided
         category_slug = self.request.query_params.get('category', None)
         if category_slug:
@@ -39,7 +76,7 @@ class PostListView(generics.ListAPIView):
         # Filter by language if the 'language' query parameter is provided
         language = self.request.query_params.get('language', 'en')  # Default to 'en' if no language is provided
         queryset = queryset.filter(language=language)
-        '''
+        
         if sort_by == 'views':
             queryset = queryset.order_by(F('number_of_views').desc() if order == 'desc' else F('number_of_views').asc())
         elif sort_by == 'likes':
@@ -51,6 +88,7 @@ class PostListView(generics.ListAPIView):
             queryset = queryset.order_by(F('created_on').desc() if order == 'desc' else F('created_on').asc())
         
         return queryset
+        '''
 
 
 
