@@ -30,6 +30,15 @@ class PostListView(generics.ListAPIView):
         # Check for sorting criteria passed as query params
         sort_by = self.request.query_params.get('sort_by', 'created_on')  # Default to created_on
         order = self.request.query_params.get('order', 'desc')  # Default to descending order
+
+        # Filter by category if the 'category' query parameter is provided
+        category_slug = self.request.query_params.get('category', None)
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+
+        # Filter by language if the 'language' query parameter is provided
+        language = self.request.query_params.get('language', 'en')  # Default to 'en' if no language is provided
+        queryset = queryset.filter(language=language)
         
         if sort_by == 'views':
             queryset = queryset.order_by(F('number_of_views').desc() if order == 'desc' else F('number_of_views').asc())
