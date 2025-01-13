@@ -125,7 +125,7 @@ APPLE_CLIENT_ID = 'com.jessster.times.web'
 APPLE_REDIRECT_URI = os.environ.get('APPLE_REDIRECT_URI', 'https://jessster-frontend.vercel.app/auth/callback,https://www.jessster.com/auth/callback')  # Replace with your actual redirect URI
 
 # Mobile App Apple Authentication Credentials
-APPLE_MOBILE_CLIENT_ID = os.environ.get('APPLE_MOBILE_CLIENT_ID', 'com.jessster.mobile')  # Your mobile app's CLIENT_ID
+APPLE_MOBILE_CLIENT_ID = os.environ.get('APPLE_MOBILE_CLIENT_ID', 'com.ios.Jessster')  # Your mobile app's CLIENT_ID
 APPLE_MOBILE_SECRET_KEY = os.environ.get('APPLE_MOBILE_SECRET_KEY_PATH', str(BASE_DIR / 'private_keys' / 'AuthKey_7C834AQ3J5.p8'))  # Mobile app secret key file
 APPLE_MOBILE_TEAM_ID = os.environ.get('APPLE_MOBILE_TEAM_ID', 'TGGQFAW4Y5')  # Team ID for the mobile app (same as web app if it's the same team)
 APPLE_MOBILE_KEY_ID = os.environ.get('APPLE_MOBILE_KEY_ID', '7C834AQ3J5')  # Key ID for the mobile app
