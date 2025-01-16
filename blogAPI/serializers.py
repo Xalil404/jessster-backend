@@ -12,13 +12,14 @@ class PostSerializer(serializers.ModelSerializer):
     likes_count = serializers.SerializerMethodField()
     number_of_views = serializers.IntegerField(read_only=True)
     comment_count = serializers.IntegerField(read_only=True)
+    is_liked = serializers.SerializerMethodField()  # Add the field for mobile app
 
     class Meta:
         model = Post
         fields = [
             'id', 'title', 'slug', 'author', 'featured_image', 'excerpt', 
             'content', 'status', 'category', 'language', 'number_of_views',
-            'likes_count', 'comment_count', 'created_on', 'updated_on'
+            'likes_count', 'comment_count', 'created_on', 'updated_on', 'is_liked'
         ]
 
     def get_likes_count(self, obj):
@@ -26,6 +27,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_comment_count(self, obj):
         return obj.comments.count()
+    
+    def get_is_liked(self, obj):
+        request = self.context.get('request')  # Get the request from context
+        if request and request.user.is_authenticated:
+            return obj.likes.filter(id=request.user.id).exists()
+        return False  # Default to False if the user is not authenticated
 
 
 
@@ -42,4 +49,13 @@ class CommentSerializer(serializers.ModelSerializer):
         if not value.strip():
             raise serializers.ValidationError("Content cannot be empty.")
         return value
+
+
+
+
+
+
+
+
+
 

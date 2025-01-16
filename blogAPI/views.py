@@ -102,6 +102,12 @@ class PostDetailView(generics.RetrieveAPIView):
         post = super().get_object()
         post.increment_views()  # Increment views using the model's method
         return post
+    
+    def get_serializer_context(self):
+        # Pass the request object to the serializer's context
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 
 class CategoryListView(generics.ListAPIView):
