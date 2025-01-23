@@ -174,7 +174,8 @@ def search_posts(request):
     query = request.GET.get('q', '')
     if query:
         posts = Post.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
+            (Q(title__icontains=query) | Q(content__icontains=query)),
+            status=1
         )
         serializer = PostSerializer(posts, many=True)
         return Response({"results": serializer.data})
