@@ -11,7 +11,7 @@ class Video(models.Model):
     ]
     
     title = models.CharField(max_length=255)
-    video = CloudinaryField('video', resource_type='video')  # Upload video to Cloudinary (required)
+    video = CloudinaryField('video', resource_type='video', blank=True, null=True)  # Upload video to Cloudinary (optional)
     description = models.TextField(blank=True)  # Optional description
     created_at = models.DateTimeField(auto_now_add=True)
     language = models.CharField(max_length=2, choices=LANGUAGES, default='en')  # Language selector

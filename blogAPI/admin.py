@@ -4,13 +4,14 @@ from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
-    list_display = ('id','title', 'comment_count', 'author', 'status', 'category', 'language', 'created_on')
+    list_display = ('id','title', 'slug', 'comment_count', 'author', 'status', 'category', 'language', 'created_on')
     list_filter = ('status', 'category', 'language')
     search_fields = ('title', 'content')
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'created_on'
     ordering = ['status', '-created_on']
     summernote_fields = ('content',)
+    list_editable = ('status',)  # Make the status field editable in the list view
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
