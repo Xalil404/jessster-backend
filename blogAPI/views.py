@@ -207,3 +207,29 @@ class LimitedPostListView(PostListView):
 
         # Limit to 13 latest articles
         return queryset[:13]
+
+
+# Fetch the 4 most viewed articles to not filter on the front end so home page loads faster
+class MostViewedPostsView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        # Get the language from query params (defaults to 'en' if not provided)
+        language = request.query_params.get('language', 'en')  # Default to 'en'
+
+        # Fetch the top 4 most viewed posts in the specified language
+        posts = Post.objects.filter(language=language, status=1).order_by('-number_of_views')[:4]
+
+        # Serialize the data into a simple list of dictionaries
+        posts_data = [
+            {
+                'id': post.id,
+                'slug': post.slug,
+                'title': post.title,
+                'featured_image': post.featured_image.url if post.featured_image else None
+            }
+            for post in posts
+        ]
+
+        # Return the posts as JSON response
+        return JsonResponse(posts_data, safe=False)

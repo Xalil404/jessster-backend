@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostListView, PostDetailView, CategoryListView, ToggleLikeView, CommentListView, CommentDetailView, LikedArticlesView, LimitedPostListView
+from .views import PostListView, PostDetailView, CategoryListView, ToggleLikeView, CommentListView, CommentDetailView, LikedArticlesView, LimitedPostListView, MostViewedPostsView
 from . import views
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('search/', views.search_posts, name='search_posts'),
     path('user/liked-articles/', LikedArticlesView.as_view(), name='liked-articles'),
     path('articles/limited/', LimitedPostListView.as_view(), name='limited-post-list'),
+    path('articles/most-viewed/', MostViewedPostsView.as_view(), name='most_viewed_posts'),
 ]
