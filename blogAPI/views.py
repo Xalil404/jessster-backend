@@ -192,3 +192,18 @@ class LikedArticlesView(APIView):
         liked_posts = Post.objects.filter(likes=user, status=1)  # Filter only published posts
         serializer = PostSerializer(liked_posts, many=True)
         return Response(serializer.data)
+
+
+
+# to show limited articles on the home page quickly rather than fetching all articles
+class LimitedPostListView(PostListView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Optional language filter
+        language = self.request.query_params.get('language', None)
+        if language:
+            queryset = queryset.filter(language=language)
+
+        # Limit to 13 latest articles
+        return queryset[:13]
