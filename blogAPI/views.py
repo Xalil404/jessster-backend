@@ -226,7 +226,7 @@ class MostViewedPostsView(APIView):
                 'id': post.id,
                 'slug': post.slug,
                 'title': post.title,
-                'featured_image': post.featured_image.url if post.featured_image and post.featured_image.name != 'placeholder' else None
+                'featured_image': post.featured_image.url if post.featured_image else None
             }
             for post in posts
         ]
