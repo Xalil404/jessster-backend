@@ -142,7 +142,7 @@ GOOGLE_CLIENT_IDS = [
 
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL = 'jessster@example.com'
+    DEFAULT_FROM_EMAIL = 'jessster590@gmail.com'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = True
