@@ -33,6 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'jessster-476efeac7498.herokuapp.com',
+    'jessster-backend.onrender.com',
     'jessster.com',
     '127.0.0.1', 
     'localhost'
