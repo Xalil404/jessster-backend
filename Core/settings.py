@@ -217,7 +217,7 @@ CORS_ALLOWED_ORIGINS = [
 # CSRF protection by default, which checks whether the request comes from a trusted domain
 CSRF_TRUSTED_ORIGINS = [
     "https://jessster-frontend.vercel.app",  # Replace with your frontend's actual domain
-    "https://jessster-476efeac7498.herokuapp.com",  # Replace with your backend's actual domain (if necessary)
+    "https://jessster-backend.onrender.com",  # Replace with your backend's actual domain (if necessary)
     'https://www.jessster.com',
 ]
 
