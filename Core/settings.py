@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.sites',
+    'anymail',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -137,6 +138,7 @@ GOOGLE_CLIENT_IDS = [
     '484109282478-g7ssevh8nrvng492cnn9vie63a9rfia1.apps.googleusercontent.com'
 ] 
 
+# For testing/receiving email in console
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
@@ -155,18 +157,23 @@ else:
     DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 '''
 
-# Brevo SMPT settings
-if 'DEVELOPMENT' in os.environ:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL = 'jessster590@gmail.com'
+
+#  Brevo Email configuration
+if "DEVELOPMENT" in os.environ:
+    # --- Development: print emails to console ---
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = "jessster590@gmail.com"
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
-    EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
-    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+    # --- Production: Brevo via Anymail API ---
+    EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
+
+    # Brevo API key (set in env.py or Render environment variables)
+    ANYMAIL = {
+        "BREVO_API_KEY": os.environ.get("BREVO_API_KEY"),
+    }
+
+    # Default sender
+    DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "jessster590@gmail.com")
 
 
 
